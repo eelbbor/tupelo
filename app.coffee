@@ -3,20 +3,21 @@ routes = require './server/routes'
 user = require './server/routes/user'
 http = require 'http'
 path = require 'path'
+webappPath = path.join(__dirname, 'webapp')
 
 app = express()
 
 # all environments
 app.set 'port', process.env.PORT || 3000
-app.set 'views', __dirname + '/webapp/views'
+app.set 'views', webappPath + '/views'
 app.set 'view engine', 'jade'
 app.use express.favicon()
 app.use express.logger('dev')
 app.use express.bodyParser()
 app.use express.methodOverride()
 app.use app.router
-app.use require('stylus').middleware(__dirname + '/webapp')
-app.use express.static(path.join(__dirname, 'webapp'))
+app.use require('stylus').middleware webappPath
+app.use express.static webappPath
 
 # development only
 if 'development' == app.get('env')
