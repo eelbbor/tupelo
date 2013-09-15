@@ -2,7 +2,6 @@ Tupelo
 ======
 
 Fun and profit for meets
-
 ======
 
 ###Getting Started
