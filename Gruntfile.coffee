@@ -1,12 +1,18 @@
 module.exports = (grunt) ->
   grunt.initConfig
     coffee:
+      app:
+        expand: true
+        cwd   : ''
+        src   : ['app.coffee']
+        dest  : 'target'
+        ext   : '.js'
       server:
         expand: true
-        cwd: 'server'
-        src: ['**/*.coffee']
-        dest: 'target/server'
-        ext: '.js'
+        cwd   : 'server'
+        src   : ['**/*.coffee']
+        dest  : 'target/server'
+        ext   : '.js'
       webapp:
         expand: true
         cwd   : 'webapp/javascripts'
@@ -52,3 +58,13 @@ module.exports = (grunt) ->
   # Default task.
   grunt.registerTask 'default', ['coffee','copy']
   grunt.registerTask 'test', ['simplemocha']
+
+  grunt.registerTask 'node:run', () ->
+    spawn = require('child_process').spawn
+    runner = spawn process.argv[0], ['target/app.js'], {
+      stdio: 'inherit'
+      env: process.env
+    }
+    runner.on 'close', @async()
+
+  grunt.registerTask 'run', ['default','node:run']
