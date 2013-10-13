@@ -1,6 +1,6 @@
 express = require 'express'
 routes = require './server/routes'
-user = require './server/routes/user'
+meet = require './server/routes/meet'
 http = require 'http'
 path = require 'path'
 webappPath = path.join(__dirname, 'webapp')
@@ -24,7 +24,7 @@ if 'development' == app.get('env')
   app.use express.errorHandler()
 
 app.get '/', routes.index
-app.get '/users', user.list
+app.get '/meet', meet.list
 
-http.createServer(app).listen app.get('port'), 
-	() -> console.log 'Express server listening on port ' + app.get('port')
+http.createServer(app).listen app.get('port'),
+  () -> console.log 'Express server listening on port ' + app.get('port')

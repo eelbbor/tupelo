@@ -15,9 +15,9 @@ module.exports = (grunt) ->
         ext   : '.js'
       webapp:
         expand: true
-        cwd   : 'webapp/javascripts'
+        cwd   : 'webapp/js'
         src   : '**/*.coffee'
-        dest  : 'target/webapp/javascripts'
+        dest  : 'target/webapp/js'
         ext   : '.js'
       test:
         expand: true
@@ -29,7 +29,7 @@ module.exports = (grunt) ->
       webapp:
         expand: true
         cwd   : 'webapp/'
-        src   : ['lib/**', 'images/**', 'views/**', 'css/**.css']
+        src   : ['js/**/*', 'images/**/*', 'views/**/*', 'css/**.css']
         dest  : 'target/webapp/'
     simplemocha:
       options:
@@ -41,6 +41,10 @@ module.exports = (grunt) ->
         reporter: 'tap'
       all:
         src: ['test/**/*.coffee']
+    stylus:
+      compile:
+        files:
+          'webapp/css/style.css': 'webapp/css/style.styl'
     watch:
       server:
         files: 'server/**/*.coffee'
@@ -48,16 +52,23 @@ module.exports = (grunt) ->
       test:
         files: 'test/**/*.coffee'
         tasks: ['simplemocha']
+      views:
+        files: 'webapp/**/*'
+        tasks: ['copy']
+      styles:
+        files: 'webapp/**/*.styl'
+        tasks: ['stylus']
 
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-simple-mocha'
+  grunt.loadNpmTasks 'grunt-contrib-stylus'
 
   # Default task.
-  grunt.registerTask 'default', ['coffee','copy']
-  grunt.registerTask 'test', ['simplemocha']
+  grunt.registerTask 'default', ['stylus','coffee','simplemocha','copy']
+  grunt.registerTask 'test', ['coffee','simplemocha']
 
   grunt.registerTask 'node:run', () ->
     spawn = require('child_process').spawn

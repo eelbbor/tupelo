@@ -1,7 +1,9 @@
 doctype 5
-html
+html(ng-app="tupelo")
   head
     title= title
     link(rel='stylesheet', href='/css/style.css')
+    script(src='js/lib/angular/angular.js')
   body
+    h1= title
     block content
