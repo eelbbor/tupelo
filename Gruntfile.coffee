@@ -41,33 +41,36 @@ module.exports = (grunt) ->
         reporter: 'tap'
       all:
         src: ['test/**/*.coffee']
-    stylus:
+    less:
+      options:
+        paths: ['webapp/css/']
+        relativeUrls: true
       compile:
         files:
-          'webapp/css/style.css': 'webapp/css/style.styl'
+          'target/webapp/css/app.css': 'webapp/css/**/*.less'
     watch:
       server:
         files: 'server/**/*.coffee'
-        tasks: ['simplemocha']
+        tasks: ['simplemocha','coffee','copy']
       test:
         files: 'test/**/*.coffee'
-        tasks: ['simplemocha']
+        tasks: ['simplemocha','coffee','copy']
       views:
-        files: 'webapp/**/*'
+        files: 'webapp/views/**/*.jade'
         tasks: ['copy']
       styles:
-        files: 'webapp/**/*.styl'
-        tasks: ['stylus']
+        files: 'webapp/**/*.less'
+        tasks: ['less']
 
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-simple-mocha'
-  grunt.loadNpmTasks 'grunt-contrib-stylus'
+  grunt.loadNpmTasks 'grunt-contrib-less'
 
   # Default task.
-  grunt.registerTask 'default', ['stylus','coffee','simplemocha','copy']
+  grunt.registerTask 'default', ['less','coffee','simplemocha','copy']
   grunt.registerTask 'test', ['coffee','simplemocha']
 
   grunt.registerTask 'node:run', () ->
