@@ -29,7 +29,7 @@ module.exports = (grunt) ->
       webapp:
         expand: true
         cwd   : 'webapp/'
-        src   : ['js/**/*', 'images/**/*', 'views/**/*', 'css/**.css']
+        src   : ['images/**/*', 'views/**/*', 'css/**.css']
         dest  : 'target/webapp/'
     simplemocha:
       options:
@@ -51,12 +51,12 @@ module.exports = (grunt) ->
     watch:
       server:
         files: 'server/**/*.coffee'
-        tasks: ['simplemocha','coffee','copy']
+        tasks: ['simplemocha','coffee']
       test:
         files: 'test/**/*.coffee'
-        tasks: ['simplemocha','coffee','copy']
+        tasks: ['simplemocha','coffee']
       views:
-        files: 'webapp/views/**/*.jade'
+        files: 'webapp/views/**/*.html'
         tasks: ['copy']
       styles:
         files: 'webapp/**/*.less'

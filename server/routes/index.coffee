@@ -1,2 +1,2 @@
 exports.index = (req, res) ->
-  res.render 'index', { title: 'Tupelo' }
+  res.sendfile 'webapp/views/index.html'
